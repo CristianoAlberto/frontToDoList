@@ -12,8 +12,4 @@ export default {
 }
 </script>
 
-<style>
-body {
-  background-color: rgba(12, 10, 10, 0.697);
-}
-</style>
+<style></style>
