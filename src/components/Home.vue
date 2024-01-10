@@ -11,7 +11,7 @@
                     </div>
                 </div>
                 <div>
-                    <ul class="mt-3 list-group">
+                    <ul v-if="isRequestComplete" class="mt-3 list-group">
                         <li v-for="item in data" :key="item.id"
                             class="list-group-item d-flex justify-content-between align-items-center custom-list-item">
                             {{ item.taskName }}
@@ -26,6 +26,9 @@
                             </div>
                         </li>
                     </ul>
+                    <div v-else>
+                        Carregando...
+                    </div>
                 </div>
             </div>
         </div>
@@ -62,7 +65,8 @@ export default {
             taskName: '',
             taskNameInput: '',
             data: [{}],
-            showModal: true
+            showModal: true,
+            isRequestComplete: false,
         }
     },
 
@@ -72,98 +76,96 @@ export default {
 
     methods: {
         async fetchData() {
-            try {
-                const response = await this.axios.get('api/ToDoList/', {
+            await this.axios.get('api/ToDoList/', {
+                headers: {
+                    'ngrok-skip-browser-warning': 'true',
+                }
+            }).then(response => {
+                this.data = response.data
+                this.isRequestComplete = true;
+            }).catch(error => {
+                console.log(error);
+            })
+        }
+    },
+
+    async create() {
+        try {
+            const response = await this.axios.post(`api/ToDoList/`,
+                {
+                    taskName: this.taskNameInput,
+                    status: false
+                }, {
+                headers: {
+                    'ngrok-skip-browser-warning': 'true',
+                }
+            });
+            this.taskNameInput = "";
+            this.fetchData();
+        } catch (error) {
+            console.log(error);
+        }
+    },
+
+    async getItemById(id) {
+        try {
+            const task = this.data.filter((data) => data.id == id);
+            this.taskName = task[0].taskName;
+            this.taskId = task[0].id;
+        } catch (error) {
+            console.log(error);
+        }
+    },
+
+    async editItem(id) {
+        try {
+            const response = await this.axios.put(`api/ToDoList/${id}`,
+                {
+                    taskName: this.taskName,
+                    status: false
+                },
+                {
                     headers: {
                         'ngrok-skip-browser-warning': 'true',
                     }
                 });
-                setTimeout(() => { this.data = response.data, 1000 }, 1000)
+            this.fetchData();
+        } catch (error) {
+            console.log(error);
+        }
+    },
 
-            } catch (error) {
-                console.log(error);
-            }
-        },
+    async deleteItem(id) {
+        try {
+            const response = await this.axios.delete(`api/ToDoList/${id}`, {
+                headers: {
+                    'ngrok-skip-browser-warning': 'true',
+                }
+            });
+            this.fetchData();
+        } catch (error) {
+            console.log(error);
+        }
+    },
 
-        async create() {
-            try {
-                const response = await this.axios.post(`api/ToDoList/`,
-                    {
-                        taskName: this.taskNameInput,
-                        status: false
-                    }, {
+    async markHowDone(id) {
+        try {
+            const task = this.data.filter((data) => data.id == id);
+            const response = await this.axios.put(`api/ToDoList/${id}`,
+                {
+                    taskName: task[0].taskName,
+                    status: true
+                },
+                {
                     headers: {
                         'ngrok-skip-browser-warning': 'true',
                     }
-                });
-                this.taskNameInput = "";
-                this.fetchData();
-            } catch (error) {
-                console.log(error);
-            }
-        },
-
-        async getItemById(id) {
-            try {
-                const task = this.data.filter((data) => data.id == id);
-                this.taskName = task[0].taskName;
-                this.taskId = task[0].id;
-            } catch (error) {
-                console.log(error);
-            }
-        },
-
-        async editItem(id) {
-            try {
-                const response = await this.axios.put(`api/ToDoList/${id}`,
-                    {
-                        taskName: this.taskName,
-                        status: false
-                    },
-                    {
-                        headers: {
-                            'ngrok-skip-browser-warning': 'true',
-                        }
-                    });
-                this.fetchData();
-            } catch (error) {
-                console.log(error);
-            }
-        },
-
-        async deleteItem(id) {
-            try {
-                const response = await this.axios.delete(`api/ToDoList/${id}`, {
-                    headers: {
-                        'ngrok-skip-browser-warning': 'true',
-                    }
-                });
-                this.fetchData();
-            } catch (error) {
-                console.log(error);
-            }
-        },
-
-        async markHowDone(id) {
-            try {
-                const task = this.data.filter((data) => data.id == id);
-                const response = await this.axios.put(`api/ToDoList/${id}`,
-                    {
-                        taskName: task[0].taskName,
-                        status: true
-                    },
-                    {
-                        headers: {
-                            'ngrok-skip-browser-warning': 'true',
-                        }
-                    },);
-                this.fetchData();
-            } catch (error) {
-                console.log(error);
-            }
+                },);
+            this.fetchData();
+        } catch (error) {
+            console.log(error);
         }
     }
-
 }
 </script>
 <style >
