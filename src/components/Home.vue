@@ -12,7 +12,7 @@
                 </div>
                 <div>
                     <ul class="mt-3 list-group">
-                        <li v-for="item in data" :key="item.id"
+                        <li v-for="(item, index) in data" :key="index"
                             class="list-group-item d-flex justify-content-between align-items-center custom-list-item">
                             {{ item.taskName }}
                             <div class="d-flex">
