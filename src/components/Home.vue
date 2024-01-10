@@ -12,7 +12,7 @@
                 </div>
                 <div>
                     <ul class="mt-3 list-group">
-                        <li v-for="(item, index) in data" :key="index"
+                        <li v-for="item in data" :key="item.id"
                             class="list-group-item d-flex justify-content-between align-items-center custom-list-item">
                             {{ item.taskName }}
                             <div class="d-flex">
@@ -61,24 +61,25 @@ export default {
             taskId: 0,
             taskName: '',
             taskNameInput: '',
-            data: [],
+            data: [{}],
             showModal: true
         }
     },
 
     mounted() {
-        setTimeout(() => {
-            this.fetchData();
-        }, 1000);
-
+        this.fetchData();
     },
 
     methods: {
         async fetchData() {
             try {
-
-                const response = await this.axios.get('api/ToDoList/');
+                const response = await this.axios.get('api/ToDoList/', {
+                    headers: {
+                        'ngrok-skip-browser-warning': 'true',
+                    }
+                });
                 this.data = response.data;
+                console.log(response.data);
             } catch (error) {
                 console.log(error);
             }
@@ -87,6 +88,10 @@ export default {
         async create() {
             try {
                 const response = await this.axios.post(`api/ToDoList/`, {
+                    headers: {
+                        'ngrok-skip-browser-warning': 'true',
+                    }
+                }, {
                     taskName: this.taskNameInput,
                     status: false
                 });
@@ -110,6 +115,10 @@ export default {
         async editItem(id) {
             try {
                 const response = await this.axios.put(`api/ToDoList/${id}`, {
+                    headers: {
+                        'ngrok-skip-browser-warning': 'true',
+                    }
+                }, {
                     taskName: this.taskName,
                     status: false
                 });
@@ -121,7 +130,11 @@ export default {
 
         async deleteItem(id) {
             try {
-                const response = await this.axios.delete(`api/ToDoList/${id}`);
+                const response = await this.axios.delete(`api/ToDoList/${id}`, {
+                    headers: {
+                        'ngrok-skip-browser-warning': 'true',
+                    }
+                });
                 this.fetchData();
             } catch (error) {
                 console.log(error);
@@ -132,6 +145,10 @@ export default {
             try {
                 const task = this.data.filter((data) => data.id == id);
                 const response = await this.axios.put(`api/ToDoList/${id}`, {
+                    headers: {
+                        'ngrok-skip-browser-warning': 'true',
+                    }
+                }, {
                     taskName: task[0].taskName,
                     status: true
                 });
