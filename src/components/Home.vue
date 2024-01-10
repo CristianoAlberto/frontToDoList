@@ -86,86 +86,86 @@ export default {
             }).catch(error => {
                 console.log(error);
             })
-        }
-    },
+        },
 
-    async create() {
-        try {
-            const response = await this.axios.post(`api/ToDoList/`,
-                {
-                    taskName: this.taskNameInput,
-                    status: false
-                }, {
-                headers: {
-                    'ngrok-skip-browser-warning': 'true',
-                }
-            });
-            this.taskNameInput = "";
-            this.fetchData();
-        } catch (error) {
-            console.log(error);
-        }
-    },
-
-    async getItemById(id) {
-        try {
-            const task = this.data.filter((data) => data.id == id);
-            this.taskName = task[0].taskName;
-            this.taskId = task[0].id;
-        } catch (error) {
-            console.log(error);
-        }
-    },
-
-    async editItem(id) {
-        try {
-            const response = await this.axios.put(`api/ToDoList/${id}`,
-                {
-                    taskName: this.taskName,
-                    status: false
-                },
-                {
+        async create() {
+            try {
+                const response = await this.axios.post(`api/ToDoList/`,
+                    {
+                        taskName: this.taskNameInput,
+                        status: false
+                    }, {
                     headers: {
                         'ngrok-skip-browser-warning': 'true',
                     }
                 });
-            this.fetchData();
-        } catch (error) {
-            console.log(error);
-        }
-    },
+                this.taskNameInput = "";
+                this.fetchData();
+            } catch (error) {
+                console.log(error);
+            }
+        },
 
-    async deleteItem(id) {
-        try {
-            const response = await this.axios.delete(`api/ToDoList/${id}`, {
-                headers: {
-                    'ngrok-skip-browser-warning': 'true',
-                }
-            });
-            this.fetchData();
-        } catch (error) {
-            console.log(error);
-        }
-    },
+        async getItemById(id) {
+            try {
+                const task = this.data.filter((data) => data.id == id);
+                this.taskName = task[0].taskName;
+                this.taskId = task[0].id;
+            } catch (error) {
+                console.log(error);
+            }
+        },
 
-    async markHowDone(id) {
-        try {
-            const task = this.data.filter((data) => data.id == id);
-            const response = await this.axios.put(`api/ToDoList/${id}`,
-                {
-                    taskName: task[0].taskName,
-                    status: true
-                },
-                {
+        async editItem(id) {
+            try {
+                const response = await this.axios.put(`api/ToDoList/${id}`,
+                    {
+                        taskName: this.taskName,
+                        status: false
+                    },
+                    {
+                        headers: {
+                            'ngrok-skip-browser-warning': 'true',
+                        }
+                    });
+                this.fetchData();
+            } catch (error) {
+                console.log(error);
+            }
+        },
+
+        async deleteItem(id) {
+            try {
+                const response = await this.axios.delete(`api/ToDoList/${id}`, {
                     headers: {
                         'ngrok-skip-browser-warning': 'true',
                     }
-                },);
-            this.fetchData();
-        } catch (error) {
-            console.log(error);
+                });
+                this.fetchData();
+            } catch (error) {
+                console.log(error);
+            }
+        },
+
+        async markHowDone(id) {
+            try {
+                const task = this.data.filter((data) => data.id == id);
+                const response = await this.axios.put(`api/ToDoList/${id}`,
+                    {
+                        taskName: task[0].taskName,
+                        status: true
+                    },
+                    {
+                        headers: {
+                            'ngrok-skip-browser-warning': 'true',
+                        }
+                    },);
+                this.fetchData();
+            } catch (error) {
+                console.log(error);
+            }
         }
-    }
+    },
 }
 </script>
 <style >
