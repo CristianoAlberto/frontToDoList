@@ -68,12 +68,16 @@ export default {
     },
 
     mounted() {
-        this.fetchData();
+        setTimeout(() => {
+            this.fetchData();
+        }, 1000);
+
     },
 
     methods: {
         async fetchData() {
             try {
+
                 const response = await this.axios.get('api/ToDoList/');
                 this.data = response.data;
             } catch (error) {
