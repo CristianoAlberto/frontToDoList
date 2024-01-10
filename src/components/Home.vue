@@ -62,7 +62,6 @@ export default {
             taskName: '',
             taskNameInput: '',
             data: [],
-            dataSend: [],
             showModal: true
         }
     },
