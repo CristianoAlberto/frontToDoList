@@ -78,8 +78,7 @@ export default {
                         'ngrok-skip-browser-warning': 'true',
                     }
                 });
-                this.data = response.data;
-                console.log(response.data);
+                this.data = await response.data;
             } catch (error) {
                 console.log(error);
             }
