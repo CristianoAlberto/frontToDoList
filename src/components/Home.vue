@@ -36,11 +36,11 @@
                                 <div class="d-none d-md-flex">
                                     <button @click="getItemById(item.id)" data-bs-toggle="modal"
                                         data-bs-target="#staticBackdrop" type="button"
-                                        class="btn btn-primary mr-2">Editar</button>
+                                        class="btn btn-primary">Editar</button>
                                     <button @click="deleteItem(item.id)" type="button"
-                                        class="btn btn-danger mr-2">Eliminar</button>
+                                        class="btn btn-danger ms-2">Eliminar</button>
                                     <button @click="markHowDone(item.id)" type="button"
-                                        class="btn btn-success">Feito</button>
+                                        class="btn btn-success ms-2">Feito</button>
                                 </div>
                             </div>
                         </li>
@@ -52,6 +52,7 @@
             </div>
         </div>
     </div>
+
 
 
     <!-- Modal -->
