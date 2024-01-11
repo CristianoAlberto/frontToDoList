@@ -197,7 +197,7 @@ export default {
     font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
     background-color: rgba(0, 0, 0, 0.561);
     border-radius: 10px;
-    width: 65%;
+    width: 100%;
 }
 
 .custom-list-item {
