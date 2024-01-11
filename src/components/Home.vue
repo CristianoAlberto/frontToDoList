@@ -1,13 +1,13 @@
 <template>
-    <div class="container">
-        <div class="d-flex align-items-center justify-content-center">
-            <div class="centro col-md-8">
-                <h1>Lista de tarefas</h1>
+    <div class="container-fluid">
+        <div class="d-flex flex-column align-items-center justify-content-center">
+            <div class="centro col-md-8 col-12">
+                <h1 class="text-center">Lista de tarefas</h1>
                 <div class="input-group">
-                    <input class=" mt-3 form-control" type="text" v-model="taskNameInput"
+                    <input class="mt-3 form-control" type="text" v-model="taskNameInput"
                         placeholder="Escreva a descrição da tarefa">
                     <div class="input-group-append">
-                        <button @click="create()" class="mt-3 ms-3 btn btn-primary" type="button">Adcionar</button>
+                        <button @click="create()" class="mt-3 btn btn-primary btn-block" type="button">Adicionar</button>
                     </div>
                 </div>
                 <div>
@@ -16,23 +16,46 @@
                             class="list-group-item d-flex justify-content-between align-items-center custom-list-item">
                             {{ item.taskName }}
                             <div class="d-flex">
-                                <button @click="getItemById(item.id)" data-bs-toggle="modal"
-                                    data-bs-target="#staticBackdrop" type="button"
-                                    class="btn btn-primary mr-2 mb-2">Editar</button>
-                                <button @click="deleteItem(item.id)" type="button"
-                                    class="btn btn-danger ms-3 mb-2">Eliminar</button>
-                                <button @click="markHowDone(item.id)" type="button"
-                                    class="btn btn-success ms-3 mb-2">Feito</button>
+                                <!-- Dropdown para telas pequenas -->
+                                <div class="d-md-none btn-group">
+                                    <button type="button" class="btn btn-secondary dropdown-toggle"
+                                        data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                        Ações
+                                    </button>
+                                    <div class="dropdown-menu">
+                                        <button @click="getItemById(item.id)" data-bs-toggle="modal"
+                                            data-bs-target="#staticBackdrop" type="button"
+                                            class="dropdown-item">Editar</button>
+                                        <button @click="deleteItem(item.id)" type="button"
+                                            class="dropdown-item">Eliminar</button>
+                                        <button @click="markHowDone(item.id)" type="button"
+                                            class="dropdown-item">Feito</button>
+                                    </div>
+                                </div>
+
+                                <!-- Botões individuais para telas médias e grandes -->
+                                <div class="d-none d-md-flex">
+                                    <button @click="getItemById(item.id)" data-bs-toggle="modal"
+                                        data-bs-target="#staticBackdrop" type="button"
+                                        class="btn btn-primary mr-2 mb-2">Editar</button>
+                                    <button @click="deleteItem(item.id)" type="button"
+                                        class="btn btn-danger ms-3 mb-2">Eliminar</button>
+                                    <button @click="markHowDone(item.id)" type="button"
+                                        class="btn btn-success ms-3 mb-2">Feito</button>
+                                </div>
                             </div>
+
+
                         </li>
                     </ul>
-                    <div v-else>
+                    <div v-else class="text-center mt-3">
                         Carregando...
                     </div>
                 </div>
             </div>
         </div>
     </div>
+
 
     <!-- Modal -->
     <div class="modal fade" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
