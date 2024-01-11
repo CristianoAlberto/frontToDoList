@@ -14,8 +14,8 @@
                     <ul v-if="isRequestComplete" class="mt-3 list-group">
                         <li v-for="item in data" :key="item.id"
                             class="list-group-item d-flex justify-content-between align-items-center custom-list-item">
-                            {{ item.taskName }}
-                            <div class="d-flex">
+                            <div class="col-8">{{ item.taskName }}</div>
+                            <div class="col-4 d-flex justify-content-end">
                                 <!-- Dropdown para telas pequenas -->
                                 <div class="d-md-none btn-group">
                                     <button type="button" class="btn btn-secondary dropdown-toggle"
@@ -32,20 +32,17 @@
                                             class="dropdown-item">Feito</button>
                                     </div>
                                 </div>
-
                                 <!-- Botões individuais para telas médias e grandes -->
                                 <div class="d-none d-md-flex">
                                     <button @click="getItemById(item.id)" data-bs-toggle="modal"
                                         data-bs-target="#staticBackdrop" type="button"
-                                        class="btn btn-primary mr-2 mb-2">Editar</button>
+                                        class="btn btn-primary mr-2">Editar</button>
                                     <button @click="deleteItem(item.id)" type="button"
-                                        class="btn btn-danger ms-3 mb-2">Eliminar</button>
+                                        class="btn btn-danger mr-2">Eliminar</button>
                                     <button @click="markHowDone(item.id)" type="button"
-                                        class="btn btn-success ms-3 mb-2">Feito</button>
+                                        class="btn btn-success">Feito</button>
                                 </div>
                             </div>
-
-
                         </li>
                     </ul>
                     <div v-else class="text-center mt-3">
